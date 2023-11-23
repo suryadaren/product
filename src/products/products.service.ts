@@ -88,4 +88,28 @@ export class ProductsService {
       product,
     );
   }
+
+  async getProductVarieties(product_id: number) {
+    const product = await this.databaseService.products.findUnique({
+      where: { id: product_id },
+    });
+
+    if (!product) {
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+    }
+
+    const varieties = await this.databaseService.productVarieties.findMany({
+      where: { product_id },
+    });
+
+    if (varieties.length < 1) {
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+    }
+
+    return new SuccessResponse(
+      HttpStatus.OK,
+      'Success Retrive Data',
+      varieties,
+    );
+  }
 }

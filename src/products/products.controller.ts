@@ -96,4 +96,20 @@ export class ProductsController {
       }
     }
   }
+
+  @Get(':product_id/product-varieties')
+  async getProductVarieties(@Param('product_id') product_id: number) {
+    try {
+      return await this.productsService.getProductVarieties(+product_id);
+    } catch (error) {
+      if (error instanceof ErrorResponse) {
+        throw error;
+      } else {
+        throw new ErrorResponse(
+          HttpStatus.INTERNAL_SERVER_ERROR,
+          error.message,
+        );
+      }
+    }
+  }
 }
