@@ -112,4 +112,24 @@ export class ProductsService {
       varieties,
     );
   }
+
+  async getProductRatings(product_id: number) {
+    const product = await this.databaseService.products.findUnique({
+      where: { id: product_id },
+    });
+
+    if (!product) {
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+    }
+
+    const ratings = await this.databaseService.productRatingDetails.findMany({
+      where: { product_id },
+    });
+
+    if (ratings.length < 1) {
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+    }
+
+    return new SuccessResponse(HttpStatus.OK, 'Success Retrive Data', ratings);
+  }
 }

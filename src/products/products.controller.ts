@@ -112,4 +112,20 @@ export class ProductsController {
       }
     }
   }
+
+  @Get(':product_id/product-ratings')
+  async getProductRatings(@Param('product_id') product_id: number) {
+    try {
+      return await this.productsService.getProductRatings(+product_id);
+    } catch (error) {
+      if (error instanceof ErrorResponse) {
+        throw error;
+      } else {
+        throw new ErrorResponse(
+          HttpStatus.INTERNAL_SERVER_ERROR,
+          error.message,
+        );
+      }
+    }
+  }
 }
