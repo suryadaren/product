@@ -15,6 +15,16 @@ export class ProductRatingsService {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
     }
 
+    const user = await this.databaseService.users.findUnique({
+      where: {
+        id: data.user_id,
+      },
+    });
+
+    if (!user) {
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+    }
+
     const newRatingAverage = await this.countNewRatingAverage(
       data.product_id,
       data.value,
@@ -22,7 +32,7 @@ export class ProductRatingsService {
 
     const createAndUpdate = await this.databaseService.$transaction(
       async (prisma) => {
-        const productRating = await prisma.productRatingDetails.create({
+        const productRating = await prisma.productRatings.create({
           data: data,
         });
 
@@ -47,8 +57,7 @@ export class ProductRatingsService {
   }
 
   async findAll() {
-    const productRatings =
-      await this.databaseService.productRatingDetails.findMany();
+    const productRatings = await this.databaseService.productRatings.findMany();
 
     if (productRatings.length < 1) {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
@@ -62,10 +71,9 @@ export class ProductRatingsService {
   }
 
   async findOne(id: number) {
-    const productRating =
-      await this.databaseService.productRatingDetails.findUnique({
-        where: { id },
-      });
+    const productRating = await this.databaseService.productRatings.findUnique({
+      where: { id },
+    });
 
     if (!productRating) {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
@@ -79,16 +87,15 @@ export class ProductRatingsService {
   }
 
   async remove(id: number) {
-    const productRating =
-      await this.databaseService.productRatingDetails.findUnique({
-        where: { id },
-      });
+    const productRating = await this.databaseService.productRatings.findUnique({
+      where: { id },
+    });
 
     if (!productRating) {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
     }
 
-    await this.databaseService.productRatingDetails.delete({
+    await this.databaseService.productRatings.delete({
       where: { id },
     });
 
@@ -106,18 +113,15 @@ export class ProductRatingsService {
   }
 
   async countNewRatingAverage(product_id: number, newRating: number) {
-    const sumRating = await this.databaseService.productRatingDetails.aggregate(
-      {
-        _sum: {
-          value: true,
-        },
-        where: { product_id },
+    const sumRating = await this.databaseService.productRatings.aggregate({
+      _sum: {
+        value: true,
       },
-    );
-    let totalRatingCount =
-      await this.databaseService.productRatingDetails.count({
-        where: { product_id },
-      });
+      where: { product_id },
+    });
+    let totalRatingCount = await this.databaseService.productRatings.count({
+      where: { product_id },
+    });
     totalRatingCount += 1;
 
     const previousTotal = sumRating._sum.value ?? 0;
