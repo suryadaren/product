@@ -59,7 +59,7 @@ export class ProductsService {
         stock: true,
         rating: true,
         productVarieties: true,
-        productRatingDetails: true,
+        productRatings: true,
       },
     });
 
@@ -122,7 +122,7 @@ export class ProductsService {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
     }
 
-    const ratings = await this.databaseService.productRatingDetails.findMany({
+    const ratings = await this.databaseService.productRatings.findMany({
       where: { product_id },
     });
 
