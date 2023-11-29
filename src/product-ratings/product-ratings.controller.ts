@@ -6,19 +6,28 @@ import {
   Param,
   Delete,
   HttpStatus,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ProductRatingsService } from './product-ratings.service';
 import { CreateProductRatingDto } from './dto/create-product-rating.dto';
 import { ErrorResponse } from 'src/common/responses/error.response';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
+@UseGuards(AuthGuard)
 @Controller('product-ratings')
 export class ProductRatingsController {
   constructor(private readonly ratingsService: ProductRatingsService) {}
 
+  @Roles(['user'])
   @Post()
-  create(@Body() createProductRatingDto: CreateProductRatingDto) {
+  create(
+    @Request() req,
+    @Body() createProductRatingDto: CreateProductRatingDto,
+  ) {
     try {
-      return this.ratingsService.create(createProductRatingDto);
+      return this.ratingsService.create(+req.user.sub, createProductRatingDto);
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -30,6 +39,7 @@ export class ProductRatingsController {
     }
   }
 
+  @Roles(['admin', 'user'])
   @Get()
   findAll() {
     try {
@@ -45,6 +55,7 @@ export class ProductRatingsController {
     }
   }
 
+  @Roles(['admin', 'user'])
   @Get(':id')
   findOne(@Param('id') id: string) {
     try {
@@ -60,6 +71,7 @@ export class ProductRatingsController {
     }
   }
 
+  @Roles(['user'])
   @Delete(':id')
   remove(@Param('id') id: string) {
     try {

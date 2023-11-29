@@ -7,10 +7,6 @@ export class CreateProductRatingDto {
 
   @IsNumber()
   @IsNotEmpty()
-  user_id: number;
-
-  @IsNumber()
-  @IsNotEmpty()
   @Min(1)
   @Max(5)
   value: number;

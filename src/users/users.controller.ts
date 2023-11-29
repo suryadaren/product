@@ -1,26 +1,14 @@
-import { Controller, Post, Body, HttpStatus, Get, Param } from '@nestjs/common';
+import { Controller, HttpStatus, Get, Param, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { ErrorResponse } from 'src/common/responses/error.response';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
+@UseGuards(AuthGuard)
+@Roles(['admin'])
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
-  @Post('register')
-  register(@Body() data: CreateUserDto) {
-    try {
-      return this.usersService.register(data);
-    } catch (error) {
-      if (error instanceof ErrorResponse) {
-        throw error;
-      }
-      return new ErrorResponse(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        'Internal Server Error',
-      );
-    }
-  }
 
   @Get()
   findAll() {
