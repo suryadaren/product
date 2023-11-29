@@ -5,7 +5,9 @@ import { ErrorResponse } from 'src/common/responses/error.response';
 import { RegisterDto } from './dto/register.dto';
 import { AuthGuard } from './auth.guard';
 import { Roles } from './roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
