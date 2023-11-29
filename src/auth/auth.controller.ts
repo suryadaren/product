@@ -20,7 +20,7 @@ export class AuthController {
       if (error instanceof ErrorResponse) {
         throw error;
       }
-      return new ErrorResponse(
+      throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
       );
@@ -35,7 +35,7 @@ export class AuthController {
       if (error instanceof ErrorResponse) {
         return error;
       }
-      return new ErrorResponse(
+      throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
       );
