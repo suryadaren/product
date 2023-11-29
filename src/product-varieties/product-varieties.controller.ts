@@ -27,6 +27,7 @@ export class ProductVarietiesController {
   @Post()
   async create(@Body() data: CreateProductVarietyDto) {
     try {
+      return await this.productVarietiesService.create(data);
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -36,13 +37,13 @@ export class ProductVarietiesController {
         'Internal Server Error',
       );
     }
-    return await this.productVarietiesService.create(data);
   }
 
   @Roles(['admin'])
   @Put(':id')
   async update(@Param('id') id: string, @Body() data: UpdateProductVarietyDto) {
     try {
+      return await this.productVarietiesService.update(+id, data);
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -52,13 +53,13 @@ export class ProductVarietiesController {
         'Internal Server Error',
       );
     }
-    return await this.productVarietiesService.update(+id, data);
   }
 
   @Roles(['admin', 'user'])
   @Get()
   async findAll() {
     try {
+      return await this.productVarietiesService.findAll();
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -68,13 +69,13 @@ export class ProductVarietiesController {
         'Internal Server Error',
       );
     }
-    return await this.productVarietiesService.findAll();
   }
 
   @Roles(['admin'])
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
+      return await this.productVarietiesService.findOne(+id);
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -84,13 +85,13 @@ export class ProductVarietiesController {
         'Internal Server Error',
       );
     }
-    return await this.productVarietiesService.findOne(+id);
   }
 
   @Roles(['admin', 'user'])
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {
+      return await this.productVarietiesService.remove(+id);
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -100,6 +101,5 @@ export class ProductVarietiesController {
         'Internal Server Error',
       );
     }
-    return await this.productVarietiesService.remove(+id);
   }
 }

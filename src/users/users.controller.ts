@@ -18,7 +18,7 @@ export class UsersController {
       if (error instanceof ErrorResponse) {
         throw error;
       }
-      return new ErrorResponse(
+      throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
       );
@@ -33,7 +33,7 @@ export class UsersController {
       if (error instanceof ErrorResponse) {
         throw error;
       }
-      return new ErrorResponse(
+      throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
       );

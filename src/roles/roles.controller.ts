@@ -6,28 +6,21 @@ import {
   Param,
   Delete,
   HttpStatus,
-  UseGuards,
-  Request,
+  Put,
 } from '@nestjs/common';
-import { ProductRatingsService } from './product-ratings.service';
-import { CreateProductRatingDto } from './dto/create-product-rating.dto';
+import { RolesService } from './roles.service';
+import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
 import { ErrorResponse } from 'src/common/responses/error.response';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Roles } from 'src/auth/roles.decorator';
 
-@UseGuards(AuthGuard)
-@Controller('product-ratings')
-export class ProductRatingsController {
-  constructor(private readonly ratingsService: ProductRatingsService) {}
+@Controller('roles')
+export class RolesController {
+  constructor(private readonly rolesService: RolesService) {}
 
-  @Roles(['user'])
   @Post()
-  create(
-    @Request() req,
-    @Body() createProductRatingDto: CreateProductRatingDto,
-  ) {
+  async create(@Body() data: CreateRoleDto) {
     try {
-      return this.ratingsService.create(+req.user.sub, createProductRatingDto);
+      return await this.rolesService.create(data);
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -39,11 +32,10 @@ export class ProductRatingsController {
     }
   }
 
-  @Roles(['admin', 'user'])
   @Get()
-  findAll() {
+  async findAll() {
     try {
-      return this.ratingsService.findAll();
+      return await this.rolesService.findAll();
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -55,11 +47,10 @@ export class ProductRatingsController {
     }
   }
 
-  @Roles(['admin', 'user'])
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     try {
-      return this.ratingsService.findOne(+id);
+      return await this.rolesService.findOne(+id);
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;
@@ -71,11 +62,25 @@ export class ProductRatingsController {
     }
   }
 
-  @Roles(['user'])
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() data: UpdateRoleDto) {
     try {
-      return this.ratingsService.remove(+id);
+      return await this.rolesService.update(+id, data);
+    } catch (error) {
+      if (error instanceof ErrorResponse) {
+        throw error;
+      }
+      throw new ErrorResponse(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        'Internal Server Error',
+      );
+    }
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    try {
+      return await this.rolesService.remove(+id);
     } catch (error) {
       if (error instanceof ErrorResponse) {
         throw error;

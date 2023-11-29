@@ -20,7 +20,7 @@ model Roles {
   id          Int @default(autoincrement()) @id
   user_id     Int
   name        String
-  desctiption String
+  description String
   user        Users @relation(fields: [user_id], references: [id])
 }
 

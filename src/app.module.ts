@@ -5,6 +5,7 @@ import { ProductVarietiesModule } from './product-varieties/product-varieties.mo
 import { ProductRatingsModule } from './product-ratings/product-ratings.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
     ProductRatingsModule,
     UsersModule,
     AuthModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [],
