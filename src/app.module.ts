@@ -4,6 +4,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { ProductVarietiesModule } from './product-varieties/product-varieties.module';
 import { ProductRatingsModule } from './product-ratings/product-ratings.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UsersModule } from './users/users.module';
     ProductVarietiesModule,
     ProductRatingsModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

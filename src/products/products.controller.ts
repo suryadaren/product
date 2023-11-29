@@ -7,16 +7,21 @@ import {
   Delete,
   HttpStatus,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ErrorResponse } from 'src/common/responses/error.response';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
+@UseGuards(AuthGuard)
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @Roles(['admin'])
   @Post()
   async create(@Body() data: CreateProductDto) {
     try {
@@ -33,6 +38,7 @@ export class ProductsController {
     }
   }
 
+  @Roles(['admin'])
   @Put(':id')
   async update(@Param('id') id: number, @Body() data: UpdateProductDto) {
     try {
@@ -49,6 +55,7 @@ export class ProductsController {
     }
   }
 
+  @Roles(['admin', 'user'])
   @Get()
   async findAll() {
     try {
@@ -65,6 +72,7 @@ export class ProductsController {
     }
   }
 
+  @Roles(['admin', 'user'])
   @Get(':id')
   async findOne(@Param('id') id: number) {
     try {
@@ -81,6 +89,7 @@ export class ProductsController {
     }
   }
 
+  @Roles(['admin'])
   @Delete(':id')
   async remove(@Param('id') id: number) {
     try {
@@ -97,6 +106,7 @@ export class ProductsController {
     }
   }
 
+  @Roles(['admin', 'user'])
   @Get(':product_id/product-varieties')
   async getProductVarieties(@Param('product_id') product_id: number) {
     try {
@@ -113,6 +123,7 @@ export class ProductsController {
     }
   }
 
+  @Roles(['admin', 'user'])
   @Get(':product_id/product-ratings')
   async getProductRatings(@Param('product_id') product_id: number) {
     try {

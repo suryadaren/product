@@ -52,7 +52,14 @@ export class ProductVarietiesService {
   }
 
   async findAll() {
-    const varieties = await this.databaseService.productVarieties.findMany();
+    const varieties = await this.databaseService.productVarieties.findMany({
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        product: true,
+      },
+    });
     if (varieties.length < 1) {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
     }
@@ -67,6 +74,12 @@ export class ProductVarietiesService {
   async findOne(id: number) {
     const varietie = await this.databaseService.productVarieties.findUnique({
       where: { id },
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        product: true,
+      },
     });
     if (!varietie) {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');

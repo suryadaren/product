@@ -8,20 +8,10 @@ import { SuccessResponse } from 'src/common/responses/success.response';
 export class ProductRatingsService {
   constructor(private databaseService: DatabaseService) {}
 
-  async create(data: CreateProductRatingDto) {
+  async create(user_id: number, data: CreateProductRatingDto) {
     const product = await this.getProduct(data.product_id);
 
     if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
-    }
-
-    const user = await this.databaseService.users.findUnique({
-      where: {
-        id: data.user_id,
-      },
-    });
-
-    if (!user) {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
     }
 
@@ -33,7 +23,11 @@ export class ProductRatingsService {
     const createAndUpdate = await this.databaseService.$transaction(
       async (prisma) => {
         const productRating = await prisma.productRatings.create({
-          data: data,
+          data: {
+            value: data.value,
+            user_id: user_id,
+            product_id: data.product_id,
+          },
         });
 
         const productUpdate = await prisma.products.update({
@@ -57,7 +51,20 @@ export class ProductRatingsService {
   }
 
   async findAll() {
-    const productRatings = await this.databaseService.productRatings.findMany();
+    const productRatings = await this.databaseService.productRatings.findMany({
+      select: {
+        id: true,
+        value: true,
+        product: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+      },
+    });
 
     if (productRatings.length < 1) {
       throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
@@ -73,6 +80,18 @@ export class ProductRatingsService {
   async findOne(id: number) {
     const productRating = await this.databaseService.productRatings.findUnique({
       where: { id },
+      select: {
+        id: true,
+        value: true,
+        product: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+      },
     });
 
     if (!productRating) {
