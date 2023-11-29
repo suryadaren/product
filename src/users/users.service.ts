@@ -18,7 +18,7 @@ export class UsersService {
     });
 
     if (users.length < 1) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Users is Empty!');
     }
 
     return new SuccessResponse(HttpStatus.OK, 'Success Retrieve Data', users);
@@ -36,7 +36,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'User Not Found!');
     }
 
     return new SuccessResponse(HttpStatus.OK, 'Success Retrieve Data', user);

@@ -12,7 +12,7 @@ export class ProductRatingsService {
     const product = await this.getProduct(data.product_id);
 
     if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Not Found!');
     }
 
     const newRatingAverage = await this.countNewRatingAverage(
@@ -67,7 +67,7 @@ export class ProductRatingsService {
     });
 
     if (productRatings.length < 1) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Rating is Empty!');
     }
 
     return new SuccessResponse(
@@ -95,7 +95,10 @@ export class ProductRatingsService {
     });
 
     if (!productRating) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(
+        HttpStatus.NOT_FOUND,
+        'Product Rating Not Found!',
+      );
     }
 
     return new SuccessResponse(
@@ -111,7 +114,10 @@ export class ProductRatingsService {
     });
 
     if (!productRating) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(
+        HttpStatus.NOT_FOUND,
+        'Product Rating Not Found!',
+      );
     }
 
     await this.databaseService.productRatings.delete({
