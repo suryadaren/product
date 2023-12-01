@@ -6,6 +6,7 @@ import { ErrorResponse } from 'src/common/responses/error.response';
 import { JwtService } from '@nestjs/jwt';
 import { SuccessResponse } from 'src/common/responses/success.response';
 import { RegisterDto } from './dto/register.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -99,5 +100,47 @@ export class AuthService {
     }
 
     throw new ErrorResponse(HttpStatus.UNAUTHORIZED, 'Password is invalid!');
+  }
+
+  async resetPassword(data: ResetPasswordDto) {
+    const user = await this.databaseService.users.findUnique({
+      where: {
+        username: data.username,
+      },
+    });
+
+    if (!user) {
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'User Not Found!');
+    }
+    const isMatch = await bcrypt.compare(data.oldPassword, user.password);
+
+    if (!isMatch) {
+      throw new ErrorResponse(
+        HttpStatus.UNAUTHORIZED,
+        'Old Password is invalid!',
+      );
+    }
+
+    const password = await bcrypt.hash(data.newPassword, 10);
+
+    const updateUser = await this.databaseService.users.update({
+      where: {
+        username: data.username,
+      },
+      data: {
+        password: password,
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+      },
+    });
+
+    return new SuccessResponse(
+      HttpStatus.CREATED,
+      'Reset Password Successfully',
+      updateUser,
+    );
   }
 }
