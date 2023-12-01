@@ -7,5 +7,6 @@ import { DatabaseModule } from 'src/common/database/database.module';
   controllers: [ProductRatingsController],
   providers: [ProductRatingsService],
   imports: [DatabaseModule],
+  exports: [ProductRatingsService],
 })
 export class ProductRatingsModule {}
