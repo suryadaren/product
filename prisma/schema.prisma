@@ -37,7 +37,8 @@ model Products {
 model ProductVarieties {
   id          Int       @default(autoincrement()) @id
   product_id  Int
-  name        String
+  type        String
+  value        String
   price       Float
   product     Products  @relation(fields: [product_id], references: [id])
 }

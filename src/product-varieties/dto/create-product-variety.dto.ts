@@ -10,7 +10,12 @@ export class CreateProductVarietyDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  name: string;
+  type: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  value: string;
 
   @ApiProperty()
   @IsNumber()

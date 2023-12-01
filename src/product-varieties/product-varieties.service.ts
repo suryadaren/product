@@ -60,7 +60,8 @@ export class ProductVarietiesService {
     const varieties = await this.databaseService.productVarieties.findMany({
       select: {
         id: true,
-        name: true,
+        type: true,
+        value: true,
         price: true,
         product: true,
       },
@@ -84,7 +85,8 @@ export class ProductVarietiesService {
       where: { id },
       select: {
         id: true,
-        name: true,
+        type: true,
+        value: true,
         price: true,
         product: true,
       },
