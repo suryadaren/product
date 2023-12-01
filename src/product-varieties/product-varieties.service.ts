@@ -12,7 +12,7 @@ export class ProductVarietiesService {
   async create(data: CreateProductVarietyDto) {
     const product = await this.getProduct(data.product_id);
     if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Not Found!');
     }
     const variety = await this.databaseService.productVarieties.create({
       data: data,
@@ -31,12 +31,17 @@ export class ProductVarietiesService {
     });
 
     if (!variety) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+      throw new ErrorResponse(
+        HttpStatus.NOT_FOUND,
+        'Product Variety Not Found!',
+      );
     }
 
-    const product = await this.getProduct(data.product_id);
-    if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+    if (data.product_id) {
+      const product = await this.getProduct(data.product_id);
+      if (!product) {
+        throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Not Found!');
+      }
     }
 
     const updateVariety = await this.databaseService.productVarieties.update({
@@ -55,13 +60,17 @@ export class ProductVarietiesService {
     const varieties = await this.databaseService.productVarieties.findMany({
       select: {
         id: true,
-        name: true,
+        type: true,
+        value: true,
         price: true,
         product: true,
       },
     });
     if (varieties.length < 1) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+      throw new ErrorResponse(
+        HttpStatus.NOT_FOUND,
+        'Product Varieties is Empty!',
+      );
     }
 
     return new SuccessResponse(
@@ -76,13 +85,17 @@ export class ProductVarietiesService {
       where: { id },
       select: {
         id: true,
-        name: true,
+        type: true,
+        value: true,
         price: true,
         product: true,
       },
     });
     if (!varietie) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+      throw new ErrorResponse(
+        HttpStatus.NOT_FOUND,
+        'Product Variety Not Found!',
+      );
     }
 
     return new SuccessResponse(
@@ -97,7 +110,10 @@ export class ProductVarietiesService {
       where: { id },
     });
     if (!variety) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+      throw new ErrorResponse(
+        HttpStatus.NOT_FOUND,
+        'Product Variety Not Found!',
+      );
     }
 
     await this.databaseService.productVarieties.delete({

@@ -26,7 +26,7 @@ export class ProductsService {
     });
 
     if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Not Found!');
     }
 
     const updateProduct = await this.databaseService.products.update({
@@ -44,7 +44,7 @@ export class ProductsService {
   async findAll() {
     const products = await this.databaseService.products.findMany();
     if (products.length < 1) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Products is Empty!');
     }
     return new SuccessResponse(HttpStatus.OK, 'Success Retrive Data', products);
   }
@@ -64,7 +64,7 @@ export class ProductsService {
     });
 
     if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Not Found!');
     }
     return new SuccessResponse(HttpStatus.OK, 'Success Retrive Data', product);
   }
@@ -75,7 +75,7 @@ export class ProductsService {
     });
 
     if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Not Found!');
     }
 
     await this.databaseService.products.delete({
@@ -95,7 +95,7 @@ export class ProductsService {
     });
 
     if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Not Found!');
     }
 
     const varieties = await this.databaseService.productVarieties.findMany({
@@ -103,7 +103,10 @@ export class ProductsService {
     });
 
     if (varieties.length < 1) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(
+        HttpStatus.NOT_FOUND,
+        'Product Varieties is Empty!',
+      );
     }
 
     return new SuccessResponse(
@@ -119,7 +122,7 @@ export class ProductsService {
     });
 
     if (!product) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Product Not Found!');
     }
 
     const ratings = await this.databaseService.productRatings.findMany({
@@ -127,7 +130,10 @@ export class ProductsService {
     });
 
     if (ratings.length < 1) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(
+        HttpStatus.NOT_FOUND,
+        'Product Ratings is Empty!',
+      );
     }
 
     return new SuccessResponse(HttpStatus.OK, 'Success Retrive Data', ratings);

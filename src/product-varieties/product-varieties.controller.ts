@@ -15,7 +15,9 @@ import { UpdateProductVarietyDto } from './dto/update-product-variety.dto';
 import { ErrorResponse } from 'src/common/responses/error.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('product varieties')
 @UseGuards(AuthGuard)
 @Controller('product-varieties')
 export class ProductVarietiesController {

@@ -17,7 +17,7 @@ export class RolesService {
     });
 
     if (!user) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'User Not Found');
     }
 
     const role = await this.databaseService.roles.create({
@@ -46,7 +46,7 @@ export class RolesService {
     const role = await this.databaseService.roles.findUnique({ where: { id } });
 
     if (!role) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Role Not Found');
     }
 
     if (data.user_id) {
@@ -57,7 +57,7 @@ export class RolesService {
       });
 
       if (!user) {
-        throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found');
+        throw new ErrorResponse(HttpStatus.NOT_FOUND, 'User Not Found');
       }
     }
 
@@ -91,7 +91,7 @@ export class RolesService {
     });
 
     if (!role) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Role Not Found!');
     }
 
     await this.databaseService.roles.delete({
@@ -121,7 +121,7 @@ export class RolesService {
       },
     });
     if (roles.length < 1) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Roles is Empty!');
     }
     return new SuccessResponse(HttpStatus.OK, 'Success Retrive Data', roles);
   }
@@ -143,7 +143,7 @@ export class RolesService {
       },
     });
     if (!roles) {
-      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Resource Not Found!');
+      throw new ErrorResponse(HttpStatus.NOT_FOUND, 'Role Not Found!');
     }
     return new SuccessResponse(HttpStatus.OK, 'Success Retrive Data', roles);
   }

@@ -14,7 +14,9 @@ import { CreateProductRatingDto } from './dto/create-product-rating.dto';
 import { ErrorResponse } from 'src/common/responses/error.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('product ratings')
 @UseGuards(AuthGuard)
 @Controller('product-ratings')
 export class ProductRatingsController {
