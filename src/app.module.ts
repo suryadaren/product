@@ -6,6 +6,7 @@ import { ProductRatingsModule } from './product-ratings/product-ratings.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { RolesModule } from './roles/roles.module';
     UsersModule,
     AuthModule,
     RolesModule,
+    SeedModule,
   ],
   controllers: [],
   providers: [],
