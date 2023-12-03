@@ -11,6 +11,8 @@ services:
         condition: service_healthy
     volumes:
       - ./logs:/usr/src/app/logs
+    command: sh -c "npx prisma db push && npm run start"
+    user: "root"
   mysql:
     image: mysql:latest
     restart: always
