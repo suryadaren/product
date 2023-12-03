@@ -1,17 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RatingsController } from './product-ratings.controller';
-import { RatingsService } from './product-ratings.service';
+import { Logger } from '@nestjs/common';
+import { ProductRatingsController } from './product-ratings.controller';
+import { ProductRatingsService } from './product-ratings.service';
+import { DatabaseService } from 'src/common/database/database.service';
+import { JwtService } from '@nestjs/jwt';
 
 describe('ProductRatingsController', () => {
-  let controller: RatingsController;
+  let controller: ProductRatingsController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [RatingsController],
-      providers: [RatingsService],
+      controllers: [ProductRatingsController],
+      providers: [ProductRatingsService, Logger, DatabaseService, JwtService],
     }).compile();
 
-    controller = module.get<RatingsController>(RatingsController);
+    controller = module.get<ProductRatingsController>(ProductRatingsController);
   });
 
   it('should be defined', () => {
