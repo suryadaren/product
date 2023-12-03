@@ -7,7 +7,7 @@ import { SuccessResponse } from 'src/common/responses/success.response';
 
 @Injectable()
 export class ProductsService {
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
   async create(data: CreateProductDto) {
     const product = await this.databaseService.products.create({

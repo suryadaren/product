@@ -8,6 +8,7 @@ import {
   HttpStatus,
   UseGuards,
   Request,
+  Logger,
 } from '@nestjs/common';
 import { ProductRatingsService } from './product-ratings.service';
 import { CreateProductRatingDto } from './dto/create-product-rating.dto';
@@ -20,20 +21,33 @@ import { ApiTags } from '@nestjs/swagger';
 @UseGuards(AuthGuard)
 @Controller('product-ratings')
 export class ProductRatingsController {
-  constructor(private readonly ratingsService: ProductRatingsService) {}
+  constructor(
+    private readonly ratingsService: ProductRatingsService,
+    private readonly logger: Logger,
+  ) {}
 
   @Roles(['user'])
   @Post()
-  create(
+  async create(
     @Request() req,
     @Body() createProductRatingDto: CreateProductRatingDto,
   ) {
+    this.logger.log('[POST] api/v1/product-ratings');
     try {
-      return this.ratingsService.create(+req.user.sub, createProductRatingDto);
+      const rating = await this.ratingsService.create(
+        +req.user.sub,
+        createProductRatingDto,
+      );
+
+      this.logger.log('create product ratings successfully');
+
+      return rating;
     } catch (error) {
       if (error instanceof ErrorResponse) {
+        this.logger.error('create product ratings failed', error);
         throw error;
       }
+      this.logger.error('create product ratings failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
@@ -43,13 +57,19 @@ export class ProductRatingsController {
 
   @Roles(['admin', 'user'])
   @Get()
-  findAll() {
+  async findAll() {
+    this.logger.log('[GET] api/v1/product-ratings');
     try {
-      return this.ratingsService.findAll();
+      const ratings = await this.ratingsService.findAll();
+      this.logger.log('get product ratings successfully');
+      return ratings;
     } catch (error) {
       if (error instanceof ErrorResponse) {
+        this.logger.error('get product ratings failed', error);
         throw error;
       }
+
+      this.logger.error('get product ratings failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
@@ -59,13 +79,19 @@ export class ProductRatingsController {
 
   @Roles(['admin', 'user'])
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
+    this.logger.log('[GET] api/v1/product-ratings/:id');
     try {
-      return this.ratingsService.findOne(+id);
+      const rating = await this.ratingsService.findOne(+id);
+      this.logger.log('get product rating successfully');
+      return rating;
     } catch (error) {
       if (error instanceof ErrorResponse) {
+        this.logger.error('get product rating failed', error);
         throw error;
       }
+
+      this.logger.error('get product rating failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
@@ -75,13 +101,18 @@ export class ProductRatingsController {
 
   @Roles(['user'])
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
+    this.logger.log('[DELETE] api/v1/product-ratings/:id');
     try {
-      return this.ratingsService.remove(+id);
+      const rating = await this.ratingsService.remove(+id);
+      this.logger.log('delete product rating successfully');
+      return rating;
     } catch (error) {
       if (error instanceof ErrorResponse) {
+        this.logger.error('delete product rating failed', error);
         throw error;
       }
+      this.logger.error('delete product rating failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',

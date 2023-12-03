@@ -7,7 +7,7 @@ import { SuccessResponse } from 'src/common/responses/success.response';
 
 @Injectable()
 export class RolesService {
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
   async create(data: CreateRoleDto) {
     const user = await this.databaseService.users.findUnique({

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { DatabaseModule } from 'src/common/database/database.module';
@@ -7,7 +7,7 @@ import { env } from 'process';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, Logger],
   imports: [
     DatabaseModule,
     JwtModule.register({

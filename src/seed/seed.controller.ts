@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Logger, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { ErrorResponse } from 'src/common/responses/error.response';
@@ -8,17 +8,24 @@ import { SeedService } from './seed.service';
 @Roles(['admin'])
 @Controller('seed')
 export class SeedController {
-  constructor(private seedService: SeedService) {}
+  constructor(
+    private readonly seedService: SeedService,
+    private readonly logger: Logger,
+  ) {}
 
   @Get('dummy-products')
   async dummyProducts() {
+    this.logger.log('[GET] api/v1/seed/dummy-products');
     try {
-      return await this.seedService.dummyProducts();
+      const dummy = await this.seedService.dummyProducts();
+      this.logger.log('insert dummy products successfully');
+      return dummy;
     } catch (error) {
       if (error instanceof ErrorResponse) {
-        return error;
+        this.logger.error('insert dummy products failed', error);
+        throw error;
       }
-
+      this.logger.error('insert dummy products failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
@@ -28,13 +35,17 @@ export class SeedController {
 
   @Get('dummy-product-varieties')
   async dummyProductVarieties() {
+    this.logger.log('[GET] api/v1/seed/dummy-product-varieties');
     try {
-      return await this.seedService.dummyProductVarieties();
+      const dummy = await this.seedService.dummyProductVarieties();
+      this.logger.log('insert dummy product varieties successfully');
+      return dummy;
     } catch (error) {
       if (error instanceof ErrorResponse) {
-        return error;
+        this.logger.error('insert dummy product varieties failed', error);
+        throw error;
       }
-
+      this.logger.error('insert dummy product varieties failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
@@ -44,13 +55,17 @@ export class SeedController {
 
   @Get('dummy-product-ratings')
   async dummyProductRatings() {
+    this.logger.log('[GET] api/v1/seed/dummy-product-ratings');
     try {
-      return await this.seedService.dummyProductRatings();
+      const dummy = await this.seedService.dummyProductRatings();
+      this.logger.log('insert dummy product ratings successfully');
+      return dummy;
     } catch (error) {
       if (error instanceof ErrorResponse) {
-        return error;
+        this.logger.error('insert dummy product ratings failed', error);
+        throw error;
       }
-
+      this.logger.error('insert dummy product ratings failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',

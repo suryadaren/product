@@ -8,7 +8,7 @@ import { ProductRatingsService } from 'src/product-ratings/product-ratings.servi
 @Injectable()
 export class SeedService {
   constructor(
-    private databaseService: DatabaseService,
+    private readonly databaseService: DatabaseService,
     private productRatingService: ProductRatingsService,
   ) {}
 
