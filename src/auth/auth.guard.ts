@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   HttpStatus,
   Injectable,
+  Logger,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
@@ -13,8 +14,9 @@ import { ErrorResponse } from 'src/common/responses/error.response';
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
-    private jwtService: JwtService,
-    private reflector: Reflector,
+    private readonly jwtService: JwtService,
+    private readonly reflector: Reflector,
+    private readonly logger: Logger,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -22,6 +24,10 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
+      this.logger.error(
+        'user unathorized',
+        new ErrorResponse(HttpStatus.UNAUTHORIZED, 'Unauthorized'),
+      );
       throw new ErrorResponse(HttpStatus.UNAUTHORIZED, 'Unauthorized');
     }
 
@@ -51,11 +57,9 @@ export class AuthGuard implements CanActivate {
 
       request['user'] = payload;
     } catch (error) {
+      this.logger.error('Forbidden: Insufficient role', error);
       if (error instanceof ErrorResponse) {
-        throw new ErrorResponse(
-          HttpStatus.FORBIDDEN,
-          'Forbidden: Insufficient role',
-        );
+        throw error;
       }
       throw new ErrorResponse(HttpStatus.UNAUTHORIZED, 'Unauthorized');
     }

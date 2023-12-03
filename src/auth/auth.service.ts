@@ -11,8 +11,8 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private databaseService: DatabaseService,
-    private jwt: JwtService,
+    private readonly databaseService: DatabaseService,
+    private readonly jwt: JwtService,
   ) {}
 
   async register(data: RegisterDto) {

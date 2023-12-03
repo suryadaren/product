@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Logger, Post } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { ErrorResponse } from 'src/common/responses/error.response';
@@ -9,16 +9,24 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly logger: Logger,
+  ) {}
 
   @Post('register')
-  register(@Body() data: RegisterDto) {
+  async register(@Body() data: RegisterDto) {
+    this.logger.log('[POST] api/v1/auth/register');
     try {
-      return this.authService.register(data);
+      const register = await this.authService.register(data);
+      this.logger.log('register successfully');
+      return register;
     } catch (error) {
       if (error instanceof ErrorResponse) {
+        this.logger.error('Register failed', error);
         throw error;
       }
+      this.logger.error('Register failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
@@ -28,12 +36,17 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() data: LoginDto) {
+    this.logger.log('[POST] api/v1/auth/login');
     try {
-      return this.authService.login(data);
+      const login = await this.authService.login(data);
+      this.logger.log('login successfully');
+      return login;
     } catch (error) {
       if (error instanceof ErrorResponse) {
-        return error;
+        this.logger.error('login failed', error);
+        throw error;
       }
+      this.logger.error('login failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',
@@ -43,12 +56,17 @@ export class AuthController {
 
   @Post('reset-password')
   async resetPassword(@Body() data: ResetPasswordDto) {
+    this.logger.log('[POST] api/v1/auth/reset-password');
     try {
-      return this.authService.resetPassword(data);
+      const reset = await this.authService.resetPassword(data);
+      this.logger.log('Reset Password successfully');
+      return reset;
     } catch (error) {
       if (error instanceof ErrorResponse) {
-        return error;
+        this.logger.error('riset Password failed', error);
+        throw error;
       }
+      this.logger.error('riset Password failed', error.message);
       throw new ErrorResponse(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Internal Server Error',

@@ -5,7 +5,7 @@ import { SuccessResponse } from 'src/common/responses/success.response';
 
 @Injectable()
 export class UsersService {
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
   async findAll() {
     const users = await this.databaseService.users.findMany({
