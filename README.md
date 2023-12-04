@@ -89,7 +89,7 @@ $ docker compose up --build -d
 - untuk mengakses api, harus melakukan login (api/v1/auth/login)
 - jadikan user sebagai admin agar bisa mengakses api lain (api/v1/users/admin/set-admin)
 - input manual ke db, input data
-- untuk menginput data dummy akses folder (api/v1/seed) di postman
+- untuk menginput data dummy akses folder (api/v1/seed) di postman (depends on : register user as user role)
 - anda bisa mengakses semua api berdasarkan roles user
   * roles admin tidak bisa mengakses input rating
   * roles user tidak bisa mengakses api post, put, delete (kecuali api create rating, delete rating, update password)
