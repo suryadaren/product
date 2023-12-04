@@ -1,0 +1,573 @@
+{
+	"info": {
+		"_postman_id": "a44e75f7-c0c1-4215-a66f-c1f611903e1a",
+		"name": "product api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "9290570"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "Get-Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/products"
+					},
+					"response": []
+				},
+				{
+					"name": "Post-create-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Laptop\",\n    \"description\" : \"desc laptop\",\n    \"stock\" : 90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/products"
+					},
+					"response": []
+				},
+				{
+					"name": "Put-update-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\" : \"desc laptoppp\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/products/11"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-product-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/products/11"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-product-varieties",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/products/11/product-varieties"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-product-ratings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/products/7/product-ratings"
+					},
+					"response": []
+				},
+				{
+					"name": "Del-product-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{local-3000}}/products/11"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "Get-Roles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/roles"
+					},
+					"response": []
+				},
+				{
+					"name": "Post-create-role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : 6,\n    \"name\" : \"user\",\n    \"description\" : \"user role\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/roles"
+					},
+					"response": []
+				},
+				{
+					"name": "Put-update-role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : 1,\n    \"description\" : \"admin role\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/roles/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-roles-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/roles/9"
+					},
+					"response": []
+				},
+				{
+					"name": "Del-roles-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{local-3000}}/roles/7"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product varieties",
+			"item": [
+				{
+					"name": "Get-all-product-varieties",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/product-varieties"
+					},
+					"response": []
+				},
+				{
+					"name": "Post-create-product-varieties",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\" : 7,\n    \"type\" : \"color\",\n    \"value\" : \"black\",\n    \"price\" : 800000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/product-varieties"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-delete-product-varieties",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{local-3000}}/product-varieties/31"
+					},
+					"response": []
+				},
+				{
+					"name": "Put-update-product-varieties",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\" : 7,\n    \"value\" : \"black\",\n    \"price\" : 800000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/product-varieties/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-product-varieties-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/product-varieties/2312"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product rating",
+			"item": [
+				{
+					"name": "Get-all-product-ratings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/product-ratings"
+					},
+					"response": []
+				},
+				{
+					"name": "Post-create-product-ratings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\" : 7,\n    \"value\" : 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/product-ratings"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-delete-product-ratings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{local-3000}}/product-ratings/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-product-ratings-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/product-ratings/12312"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Get-users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-usersById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/users/12312"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-setAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/users/admin/set-admin"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "POST-register",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"hafizh\",\n    \"email\" : \"hafizh@gmail.com\",\n    \"password\" : \"Daren123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "POST-login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"rahmilutari\",\n    \"password\" : \"Daren123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "POST-reset-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"suryadaren\",\n    \"oldPassword\" : \"Daren123!\",\n    \"newPassword\" : \"Daren123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{local-3000}}/auth/reset-password"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "seed",
+			"item": [
+				{
+					"name": "GET-dummy-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/seed/dummy-products"
+					},
+					"response": []
+				},
+				{
+					"name": "GET-dummy-product-varieties",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/seed/dummy-product-varieties"
+					},
+					"response": []
+				},
+				{
+					"name": "GET-dummy-product-ratings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{bearer-local}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{local-3000}}/seed/dummy-product-ratings"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
