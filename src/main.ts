@@ -6,6 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WinstonModule } from 'nest-winston';
 import 'winston-daily-rotate-file';
 import { transports, format } from 'winston';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -59,7 +60,14 @@ async function bootstrap() {
     // other options
   });
 
+  // logger
   app.useLogger(logger);
+
+  // helmet security
+  app.use(helmet());
+
+  // cors security
+  app.enableCors();
 
   await app.listen(3000);
 }
