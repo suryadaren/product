@@ -41,4 +41,45 @@ export class UsersService {
 
     return new SuccessResponse(HttpStatus.OK, 'Success Retrieve Data', user);
   }
+
+  async setAdmin(id: number) {
+    const role = await this.databaseService.roles.findMany({
+      where: {
+        user_id: id,
+        name: 'admin',
+      },
+    });
+
+    if (role.length > 0) {
+      throw new ErrorResponse(
+        HttpStatus.CONFLICT,
+        'User Already set as Admin!',
+      );
+    }
+
+    const createRole = await this.databaseService.roles.create({
+      data: {
+        user_id: id,
+        name: 'admin',
+        description: 'admin role',
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+      },
+    });
+
+    return new SuccessResponse(
+      HttpStatus.CREATED,
+      'User set as Admin Successfully',
+      createRole,
+    );
+  }
 }
